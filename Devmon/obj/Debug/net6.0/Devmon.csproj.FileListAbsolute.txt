@@ -1,0 +1,12 @@
+C:\Users\alexe\RiderProjects\Devmon\Devmon\bin\Debug\net6.0\Devmon.deps.json
+C:\Users\alexe\RiderProjects\Devmon\Devmon\bin\Debug\net6.0\Devmon.dll
+C:\Users\alexe\RiderProjects\Devmon\Devmon\bin\Debug\net6.0\Devmon.pdb
+C:\Users\alexe\RiderProjects\Devmon\Devmon\obj\Debug\net6.0\Devmon.csproj.AssemblyReference.cache
+C:\Users\alexe\RiderProjects\Devmon\Devmon\obj\Debug\net6.0\Devmon.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\alexe\RiderProjects\Devmon\Devmon\obj\Debug\net6.0\Devmon.AssemblyInfoInputs.cache
+C:\Users\alexe\RiderProjects\Devmon\Devmon\obj\Debug\net6.0\Devmon.AssemblyInfo.cs
+C:\Users\alexe\RiderProjects\Devmon\Devmon\obj\Debug\net6.0\Devmon.csproj.CoreCompileInputs.cache
+C:\Users\alexe\RiderProjects\Devmon\Devmon\obj\Debug\net6.0\Devmon.dll
+C:\Users\alexe\RiderProjects\Devmon\Devmon\obj\Debug\net6.0\refint\Devmon.dll
+C:\Users\alexe\RiderProjects\Devmon\Devmon\obj\Debug\net6.0\Devmon.pdb
+C:\Users\alexe\RiderProjects\Devmon\Devmon\obj\Debug\net6.0\ref\Devmon.dll
