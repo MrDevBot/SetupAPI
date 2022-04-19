@@ -1,9 +1,10 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
 using Devmon;
-using static System.Security.Principal.WindowsIdentity;
 
 // Example Usage Code
 foreach (HardwareManager.SetupApi.Devices.Device device in HardwareManager.SetupApi.Devices.deviceInfoList)
@@ -23,7 +24,7 @@ foreach (HardwareManager.SetupApi.Devices.Device device in HardwareManager.Setup
 //    //HardwareManager.SetupApi.SetDeviceState(n => n.ToUpperInvariant().Contains(device.HardwareID), false);
 //}
 
-if (IsAdministrator())
+if (IsUserAnAdmin())
 {
     Console.WriteLine(HardwareManager.SetupApi.SetDeviceState(
         n => n.ToUpperInvariant().Contains("PCI\\VEN_10DE&DEV_1F15&SUBSYS_20111A58&REV_A1"), false)
@@ -41,13 +42,6 @@ static string PrintNotEmpty(string Input)
     return Input == "" ? "Null" : Input;
 }
 
-#pragma warning disable CA1416
-static bool IsAdministrator()
-{
-    using WindowsIdentity identity = GetCurrent();
-    var principal = new WindowsPrincipal(identity);
-    
-    Debug.Assert(principal != null, nameof(principal) + " != null");
-    return principal.IsInRole(WindowsBuiltInRole.Administrator);
-}
-#pragma warning restore CA1416
+[DllImport("shell32.dll", SetLastError=true)]
+[return: MarshalAs(UnmanagedType.Bool)]
+static extern bool IsUserAnAdmin();
