@@ -8,7 +8,13 @@ using static System.Security.Principal.WindowsIdentity;
 // Example Usage Code
 foreach (HardwareManager.SetupApi.Devices.Device device in HardwareManager.SetupApi.Devices.deviceInfoList)
 {
-    Console.WriteLine(device.Name);
+    Console.Write(device.Name != string.Empty? $"{device.Name}\n" : "Unknown Device \n");
+
+    foreach (var variableProperty in device.Properties)
+    {
+        Console.Write($"[{variableProperty.Key}] {variableProperty.Value}\n");
+    }
+    Console.Write("\n");
 }
 //Console.WriteLine(CompareHardware(HardwareManager.SetupApi.GetDeviceEnumerator(), HardwareManager.SetupApi.GetDeviceEnumerator()));
 

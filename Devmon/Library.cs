@@ -27,11 +27,17 @@ public static class HardwareManager
         private class SafeDeviceInformationSetHandle : SafeHandleMinusOneIsInvalid
         {
             private SafeDeviceInformationSetHandle() : base(true) { }
+
+            public static SafeDeviceInformationSetHandle CreateInstance()
+            {
+                return new SafeDeviceInformationSetHandle();
+            }
+
             private SafeDeviceInformationSetHandle(IntPtr preexistingHandle, bool ownsHandle) : base(ownsHandle)
             {
                 SetHandle(preexistingHandle);
             }
-
+            
             [SecurityCritical]
             protected override bool ReleaseHandle()
             {
@@ -412,6 +418,7 @@ public static class HardwareManager
         
         public static class Devices
         {
+            //basic key/value pair implementation
             public struct Property
             {
                 public string Key;
@@ -435,7 +442,7 @@ public static class HardwareManager
         private static List<Devices.Device> GetDeviceEnumerator()
         {
             List<Devices.Device> retVal = new List<Devices.Device>();
-            var nullGuid = Guid.Empty;
+            Guid nullGuid = Guid.Empty;
             using SafeDeviceInformationSetHandle infoSet =
                 SetupDiGetClassDevs(ref nullGuid, null, IntPtr.Zero, DIGCF.ALLCLASSES);
             CheckWin32CallSuccess(!infoSet.IsInvalid);
@@ -449,11 +456,22 @@ public static class HardwareManager
                 {
                     Devices.Device currentDevice = new Devices.Device();
                     CheckWin32CallSuccess(SetupDiEnumDeviceInfo(infoSet, index, ref devInfo));
-                    Console.WriteLine(GetStringPropertyForDevice(infoSet, ref devInfo, SPDRP.CLASS));
+                    //Console.WriteLine(GetStringPropertyForDevice(infoSet, ref devInfo, SPDRP.CLASS));
 
                     currentDevice.Name = GetStringPropertyForDevice(infoSet, ref devInfo, SPDRP.FRIENDLYNAME);
                     currentDevice.Properties = new List<Devices.Property>();
-                    currentDevice.Properties.Add(new Devices.Property("", ""));
+                    
+                    currentDevice.Properties.Add(new Devices.Property(
+                        "Class",
+                        GetStringPropertyForDevice(infoSet, ref devInfo, SPDRP.CLASS)));
+                    
+                    currentDevice.Properties.Add(new Devices.Property(
+                        "Driver",
+                        GetStringPropertyForDevice(infoSet, ref devInfo, SPDRP.DRIVER)));
+                    
+                    currentDevice.Properties.Add(new Devices.Property(
+                        "HardwareID",
+                        GetStringPropertyForDevice(infoSet, ref devInfo, SPDRP.HARDWAREID)));
                     
                     //add currentDevice to return list
                     retVal.Add(currentDevice);
